@@ -24,7 +24,9 @@ typedef struct {
 } inputST;
 
 typedef struct {
-    unsigned int 
+    unsigned int g_iScreenResolutionX;
+    unsigned int g_iScreenResolutionY;
+    float        g_fScreenRefreshRate;
 } displayST;
 
 void platformDisplayInit(char* windowName, unsigned int windowSizeX, unsigned int windowSizeY);
