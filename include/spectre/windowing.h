@@ -53,7 +53,7 @@ displayST platformDisplayResolution(void);
 void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
 {
     unsigned int m_iTargetFpsMs = (unsigned int)(1000.0f / fRefreshRate);
-    if(!(deltaTime >= m_fTargetFpsMs))
+    if(!(deltaTime >= m_iTargetFpsMs))
     {
         #ifdef __WIN32 || __WIN64
             Sleep((m_iTargetFpsMs - (deltaTime * 1000) / 1000 - 0.005));
