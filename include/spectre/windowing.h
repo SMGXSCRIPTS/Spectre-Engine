@@ -2,7 +2,14 @@
 #define __SPECTRE_PLATFORM_WINDOWING_H
 
 #include <spectre/framebuffer.h>
-#include <unistd.h>
+
+#ifdef __WIN32 || __WIN64
+    #include <windows.h>
+#elif __linux__ || __APPLE__
+    #include <unistd.h>
+#else
+    #error "ERROR! Spectre Does Not Support This Platform!"
+#endif
 
 typedef struct {
     unsigned int m_iPosX;
@@ -35,12 +42,25 @@ void platformDisplayResize(unsigned int windowSizeX, unsigned int windowSizeY);
 void platformDisplayProject(unsigned int iPosX, unsigned int iPosY, unsigned int hColor);
 void platformDisplayFrameBuffer(frameBuffer* fb);
 void platformDisplayFullScreen(unsigned char bIsFullScreen);
-void platformDisplayFrameCap(float fRefreshRate, double deltaTime);
+void platformDisplayDrawLine(frameBuffer* fb, Vector2i* fPosA, Vector2i* fPosB);
 void platformDisplayClear(void);
 void platformDisplayUpdate(void);
 void platformDisplayCleanup(void);
 
 inputST   platformDisplayKeyInput(void);
 displayST platformDisplayResolution(void);
+
+void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
+{
+    unsigned int m_fTargetFpsMs = (unsigned int)(1000.0f / fRefreshRate);
+    if(!(deltaTime >= m_fTargetFpsMs))
+    {
+        #ifdef __WIN32 || __WIN64
+            Sleep((m_fTargetFpsMs - (deltaTime * 1000) / 1000 - 0.005));
+        #elif __linux__ || __APPLE__
+            usleep((m_fTargetFpsMs - (deltaTime * 1000) - 0.005));
+        #endif
+    }
+}
 
 #endif//__SPECTRE_PLATFORM_WINDOWING_H
