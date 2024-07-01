@@ -42,7 +42,6 @@ void platformDisplayResize(unsigned int windowSizeX, unsigned int windowSizeY);
 void platformDisplayProject(unsigned int iPosX, unsigned int iPosY, unsigned int hColor);
 void platformDisplayFrameBuffer(frameBuffer* fb);
 void platformDisplayFullScreen(unsigned char bIsFullScreen);
-void platformDisplayDrawLine(frameBuffer* fb, Vector2i* fPosA, Vector2i* fPosB);
 void platformDisplayClear(void);
 void platformDisplayUpdate(void);
 void platformDisplayCleanup(void);
@@ -50,7 +49,13 @@ void platformDisplayCleanup(void);
 inputST   platformDisplayKeyInput(void);
 displayST platformDisplayResolution(void);
 
-void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
+inline void platformDisplayDrawLine(frameBuffer* fb, Vector2i* iPointA, Vector2i* iPointB)
+{
+    //TODO: Line Drawer On Framebuffer Code
+    continue;
+}
+
+inline void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
 {
     unsigned int m_iTargetFpsMs = (unsigned int)(1000.0f / fRefreshRate);
     if(!(deltaTime >= m_iTargetFpsMs))
