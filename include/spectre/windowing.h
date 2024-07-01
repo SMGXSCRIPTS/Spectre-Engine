@@ -36,7 +36,7 @@ void platformDisplayClear(void);
 void platformDisplayUpdate(void);
 void platformDisplayCleanup(void);
 
-inputST   platformDisplayKeyInput(void)
-displayST platformDisplayResolution(void)
+inputST   platformDisplayKeyInput(void);
+displayST platformDisplayResolution(void);
 
 #endif//__SPECTRE_PLATFORM_WINDOWING_H
