@@ -2,6 +2,7 @@
 #define __SPECTRE_PLATFORM_WINDOWING_H
 
 #include <spectre/framebuffer.h>
+#include <unistd.h>
 
 typedef struct {
     unsigned int m_iPosX;
@@ -26,12 +27,13 @@ typedef struct {
     unsigned int 
 } displayST;
 
-void platformDisplayInit(char* windowName, unsigned int windowSizeX, unsigned int windowSizeY, float fRefreshRate);
+void platformDisplayInit(char* windowName, unsigned int windowSizeX, unsigned int windowSizeY);
 void platformDisplayRename(char* windowName);
 void platformDisplayResize(unsigned int windowSizeX, unsigned int windowSizeY);
 void platformDisplayProject(unsigned int iPosX, unsigned int iPosY, unsigned int hColor);
 void platformDisplayFrameBuffer(frameBuffer* fb);
 void platformDisplayFullScreen(unsigned char bIsFullScreen);
+void platformDisplayFrameCap(float fRefreshRate, double deltaTime);
 void platformDisplayClear(void);
 void platformDisplayUpdate(void);
 void platformDisplayCleanup(void);
