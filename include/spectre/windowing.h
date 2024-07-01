@@ -61,9 +61,9 @@ inline void platformDisplayFrameCap(const float fRefreshRate, const double delta
     if(!(deltaTime >= m_iTargetFpsMs))
     {
         #ifdef __WIN32 || __WIN64
-            Sleep((m_iTargetFpsMs - (deltaTime * 1000) / 1000 - 0.004));
+            Sleep((m_iTargetFpsMs - (deltaTime * 1000) / 1000 - 4));
         #elif __linux__ || __APPLE__
-            usleep((m_iTargetFpsMs - (deltaTime * 1000) - 0.004));
+            usleep((m_iTargetFpsMs - (deltaTime * 1000) - 4000));
         #endif
     }
 }
