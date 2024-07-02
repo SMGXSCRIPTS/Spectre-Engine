@@ -19,7 +19,7 @@ typedef struct {
 frameBuffer frameBufferInit(unsigned short iFrameBufferSizeX, unsigned short iFrameBufferSizeY);
 
 void frameBufferClear(unsigned int hColorValue);
-void frameBufferDrawLine(frameBuffer* fb, Vector2i* iPointA, Vector2i* iPointB);
+void frameBufferDrawLine(frameBuffer* fb, Vector2i iPointA, Vector2i iPointB);
 void frameBufferProject(unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue);
 void franeBufferResize(frameBuffer* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY);
 void frameBufferCleanup(frameBuffer* fb);
