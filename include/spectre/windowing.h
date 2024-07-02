@@ -1,62 +1,27 @@
-#ifndef __SPECTRE_PLATFORM_WINDOWING_H
-#define __SPECTRE_PLATFORM_WINDOWING_H
+#ifndef __SPECTRE_FRAMEBUFFER_H
+#define __SPECTRE_FRAMEBUFFER_H
 
 #pragma once
 
-#include <spectre/framebuffer.h>
-
-#ifdef __WIN32 || __WIN64
-    #include <windows.h>
-#elif __linux__ || __APPLE__
-    #include <unistd.h>
-#else
-    #error "ERROR! Spectre Does Not Support This Platform!"
-#endif
+#include <stdlib.h>
 
 typedef struct {
-    double m_fPosX;
-    double m_fPosY;
-    double m_fPosZ;
-} Vector3f;
+    unsigned int m_iPosX;
+    unsigned int m_iPosY;
+} Vector2i;
 
 typedef struct {
-    float g_fMousePosX;
-    float g_fMousePosY;
-    float g_fMouseAccelerationX;
-    float g_fMouseAccelerationY;
-    char* g_cKeyboardBufferInput;
-} inputST;
+    unsigned int g_iFrameBufferWidth;
+    unsigned int g_iFrameBufferHeight;
+    unsigned int* g_iFrameBufferData;
+} frameBuffer;
 
-typedef struct {
-    unsigned int g_iScreenResolutionX;
-    unsigned int g_iScreenResolutionY;
-    float        g_fScreenRefreshRate;
-} displayST;
+frameBuffer frameBufferInit(unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY);
 
-void platformDisplayInit(char* windowName, unsigned int windowSizeX, unsigned int windowSizeY);
-void platformDisplayRename(char* windowName);
-void platformDisplayResize(unsigned int windowSizeX, unsigned int windowSizeY);
-void platformDisplayProject(unsigned int iPosX, unsigned int iPosY, unsigned int hColor);
-void platformDisplayFrameBuffer(frameBuffer* fb);
-void platformDisplayFullScreen(unsigned char bIsFullScreen);
-void platformDisplayClear(void);
-void platformDisplayUpdate(void);
-void platformDisplayCleanup(void);
+void frameBufferClear(frameBuffer* fb, unsigned int hColorValue);
+void frameBufferDrawLine(frameBuffer* fb, Vector2i* iPointA, Vector2i* iPointB);
+void frameBufferProject(frameBuffer* fb, unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue);
+void franeBufferResize(frameBuffer* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY);
+void frameBufferCleanup(frameBuffer* fb);
 
-inputST   platformDisplayKeyInput(void);
-displayST platformDisplayResolution(void);
-
-inline void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
-{
-    unsigned int m_iTargetFpsMs = (unsigned int)(1000.0f / fRefreshRate);
-    if(!(deltaTime >= m_iTargetFpsMs))
-    {
-        #ifdef __WIN32 || __WIN64
-            Sleep((m_iTargetFpsMs - (deltaTime * 1000) / 1000 - 4));
-        #elif __linux__ || __APPLE__
-            usleep((m_iTargetFpsMs - (deltaTime * 1000) - 4000));
-        #endif
-    }
-}
-
-#endif//__SPECTRE_PLATFORM_WINDOWING_H
+#endif//__SPECTRE_FRAMEBUFFER_H
