@@ -1,6 +1,8 @@
 #ifndef __SPECTRE_PLATFORM_WINDOWING_H
 #define __SPECTRE_PLATFORM_WINDOWING_H
 
+#pragma once
+
 #include <spectre/framebuffer.h>
 
 #ifdef __WIN32 || __WIN64
@@ -10,11 +12,6 @@
 #else
     #error "ERROR! Spectre Does Not Support This Platform!"
 #endif
-
-typedef struct {
-    unsigned int m_iPosX;
-    unsigned int m_iPosY;
-} Vector2i;
 
 typedef struct {
     double m_fPosX;
@@ -48,12 +45,6 @@ void platformDisplayCleanup(void);
 
 inputST   platformDisplayKeyInput(void);
 displayST platformDisplayResolution(void);
-
-inline void platformDisplayDrawLine(frameBuffer* fb, Vector2i* iPointA, Vector2i* iPointB)
-{
-    //TODO: Line Drawer On Framebuffer Code
-    continue;
-}
 
 inline void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
 {
