@@ -34,9 +34,9 @@ void frameBufferProject(frameBuffer* fb, unsigned int iPosX, unsigned int iPosY,
 
 void franeBufferResize(frameBuffer* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY)
 {
-    fb.g_iFrameBufferWidth  = iFrameBufferTargetX;
-    fb.g_iFrameBufferHeight = iFrameBufferTargetY;
-    fb.g_iFrameBufferData   = (unsigned int*)realloc(fb.iFrameBufferData, iFrameBufferTargetX * iFrameBufferTargetY * sizeof(unsigned int));
+    fb->g_iFrameBufferWidth  = iFrameBufferTargetX;
+    fb->g_iFrameBufferHeight = iFrameBufferTargetY;
+    fb->g_iFrameBufferData   = (unsigned int*)realloc(fb.iFrameBufferData, iFrameBufferTargetX * iFrameBufferTargetY * sizeof(unsigned int));
 }
 
 void frameBufferCleanup(frameBuffer* fb)
