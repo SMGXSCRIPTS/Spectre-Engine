@@ -21,10 +21,36 @@ void frameBufferClear(frameBuffer* fb, unsigned int hColorValue)
     }
 }
 
-void frameBufferDrawLine(frameBuffer* fb, Vector2i* iPointA, Vector2i* iPointB);
+void frameBufferDrawLine(frameBuffer* fb, Vector2i iPointA, Vector2i iPointB);
 {
-    //TODO: Draw Line Function For The Framebuffer...
-    continue;
+    int m_iTempX1 =  abs(iPointB.m_iPosX - iPointA.m_iPosX);
+    int m_iTempX2 =  iPointA.m_iPosX < iPointB.m_iPosX ? 1 : -1;
+    int m_iTempY1 = -abs(iPointB.m_iPosY - iPointA.m_iPosY);
+    int m_iTempY2 =  iPointA.m_iPosY < iPointB.m_iPosY ? 1 : -1;
+    int m_iERR = m_iTempX1 + m_iTempY1;
+    int m_iE;
+    
+    unsigned char m_bIsRunning = 1;
+    
+    while(m_bIsRunning == 1)
+    {
+        frameBufferProject
+        if(iPointA.m_iPosX == iPointB.m_iPosX && iPointA.m_iPosY == iPointB.m_iPosY)
+        {
+            break;
+        }
+        m_iE = 2 * m_iERR;
+        if(m_iE <= m_iTempX1)
+        {
+            m_iERR += m_iTempX1;
+            iPointA.m_iPosX += m_iTempY2;
+        }
+        if(m_iE >= m_iTempY1)
+        {
+            m_iERR += m_iTempY1;
+            iPointA.m_iPosY += m_iTempY2;
+        }
+    }
 }
 
 void frameBufferProject(frameBuffer* fb, unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue)
