@@ -14,14 +14,14 @@ typedef struct {
     unsigned int g_iFrameBufferWidth;
     unsigned int g_iFrameBufferHeight;
     unsigned int* g_iFrameBufferData;
-} frameBuffer;
+} frameBuffer_t;
 
-frameBuffer frameBufferInit(unsigned short iFrameBufferSizeX, unsigned short iFrameBufferSizeY);
+frameBuffer* frameBufferInit(unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY);
 
-void frameBufferClear(unsigned int hColorValue);
-void frameBufferDrawLine(frameBuffer* fb, Vector2i iPointA, Vector2i iPointB);
-void frameBufferProject(unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue);
-void franeBufferResize(frameBuffer* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY);
-void frameBufferCleanup(frameBuffer* fb);
+void frameBufferClear(frameBuffer_t* fb, unsigned int hColorValue);
+void frameBufferDrawLine(frameBuffer_t* fb, Vector2i iPointA, Vector2i iPointB);
+void frameBufferProject(frameBuffer_t* fb, unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue);
+void franeBufferResize(frameBuffer_t* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY);
+void frameBufferCleanup(frameBuffer_t* fb);
 
 #endif//__SPECTRE_FRAMEBUFFER_H
