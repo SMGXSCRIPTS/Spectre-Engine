@@ -1,16 +1,16 @@
 #include <spectre/framebuffer.h>
 
-frameBuffer frameBufferInit(unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY)
+frameBuffer_t* frameBufferInit(unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY)
 {
-    frameBuffer fb;
-    fb.g_iFrameBufferWidth  = iFrameBufferSizeX;
-    fb.g_iFrameBufferHeight = iFrameBufferSizeY;
-    fb.g_iFrameBufferData   = (unsigned int*)malloc(iFrameBufferWidth * iFrameBufferHeight * sizeof(unsigned int));
+    frameBuffer* fb;
+    fb->g_iFrameBufferWidth  = iFrameBufferSizeX;
+    fb->g_iFrameBufferHeight = iFrameBufferSizeY;
+    fb->g_iFrameBufferData   = (unsigned int*)malloc(iFrameBufferWidth * iFrameBufferHeight * sizeof(unsigned int));
     frameBufferClear(&fb, 0xFF000000);
     return fb;
 }
 
-void frameBufferClear(frameBuffer* fb, unsigned int hColorValue)
+void frameBufferClear(frameBuffer_t* fb, unsigned int hColorValue)
 {
     for(unsigned int m_nCounterX = 0; m_nCounterX < fb->g_iFrameBufferWidth; ++m_nCounterX)
     {
@@ -21,7 +21,7 @@ void frameBufferClear(frameBuffer* fb, unsigned int hColorValue)
     }
 }
 
-void frameBufferDrawLine(frameBuffer* fb, Vector2i iPointA, Vector2i iPointB);
+void frameBufferDrawLine(frameBuffer_t* fb, Vector2i iPointA, Vector2i iPointB);
 {
     int m_iTempX1 =  abs(iPointB.m_iPosX - iPointA.m_iPosX);
     int m_iTempX2 =  iPointA.m_iPosX < iPointB.m_iPosX ? 1 : -1;
@@ -53,19 +53,19 @@ void frameBufferDrawLine(frameBuffer* fb, Vector2i iPointA, Vector2i iPointB);
     }
 }
 
-void frameBufferProject(frameBuffer* fb, unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue)
+void frameBufferProject(frameBuffer_t* fb, unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue)
 {
     fb->g_iFrameBufferData[iPosY * fb->g_iFrameBufferWidth + iPosX] = hColorValue;
 }
 
-void franeBufferResize(frameBuffer* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY)
+void franeBufferResize(frameBuffer_t* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY)
 {
     fb->g_iFrameBufferWidth  = iFrameBufferTargetX;
     fb->g_iFrameBufferHeight = iFrameBufferTargetY;
     fb->g_iFrameBufferData   = (unsigned int*)realloc(fb.iFrameBufferData, iFrameBufferTargetX * iFrameBufferTargetY * sizeof(unsigned int));
 }
 
-void frameBufferCleanup(frameBuffer* fb)
+void frameBufferCleanup(frameBuffer_t* fb)
 {
     if(fb != NULL)
     {
