@@ -1,41 +1,41 @@
 #include <spectre/framebuffer.h>
 
-frameBuffer_t* frameBufferInit(unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY)
+frameBuffer_t* frameBufferInit(const char* cFrameBufferType, unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY, unsigned char bIsGlobal)
 {
     frameBuffer* fb;
-    fb->g_iFrameBufferWidth  = iFrameBufferSizeX;
-    fb->g_iFrameBufferHeight = iFrameBufferSizeY;
-    fb->g_iFrameBufferData   = (unsigned int*)malloc(iFrameBufferWidth * iFrameBufferHeight * sizeof(unsigned int));
+    fb->m_iFrameBufferWidth     = iFrameBufferSizeX;
+    fb->m_iFrameBufferHeight    = iFrameBufferSizeY;
+    fb->m_hFrameBufferColorData = (unsigned int*)malloc(iFrameBufferWidth * iFrameBufferHeight * sizeof(unsigned int));
+    fb->g_bIsGlobalAccess       = bIsGlobal;
+    fb->g_cFrameBufferType      = cFrameBufferType;
     frameBufferClear(&fb, 0xFF000000);
     return fb;
 }
 
 void frameBufferClear(frameBuffer_t* fb, unsigned int hColorValue)
 {
-    for(unsigned int m_nCounterX = 0; m_nCounterX < fb->g_iFrameBufferWidth; ++m_nCounterX)
+    for(unsigned int m_nCounterX = 0; m_nCounterX < fb->m_iFrameBufferWidth; ++m_nCounterX)
     {
-        for(unsigned int m_nCounterY = 0; m_nCounterY < fb->g_iFrameBufferHeight; ++m_nCounterY)
+        for(unsigned int m_nCounterY = 0; m_nCounterY < fb->m_iFrameBufferHeight; ++m_nCounterY)
         {
-            fb->g_iFrameBufferData[m_nCounterY * fb->g_iFrameBufferWidth + m_nCounterX] = hColorValue;
+            fb->m_hFrameBufferColorData[m_nCounterY * fb->m_iFrameBufferWidth + m_nCounterX] = hColorValue;
         }
     }
 }
 
-void frameBufferDrawLine(frameBuffer_t* fb, Vector2i iPointA, Vector2i iPointB);
+void frameBufferDrawLine(frameBuffer_t* fb, Vector2i* iPointA, Vector2i* iPointB, unsigned int hColorValue);
 {
-    int m_iTempX1 =  abs(iPointB.m_iPosX - iPointA.m_iPosX);
-    int m_iTempX2 =  iPointA.m_iPosX < iPointB.m_iPosX ? 1 : -1;
-    int m_iTempY1 = -abs(iPointB.m_iPosY - iPointA.m_iPosY);
-    int m_iTempY2 =  iPointA.m_iPosY < iPointB.m_iPosY ? 1 : -1;
-    int m_iERR = m_iTempX1 + m_iTempY1;
+    int m_iTempX1 =  abs(iPointB->m_iPosX - iPointA->m_iPosX);
+    int m_iTempX2 =  iPointA->m_iPosX < iPointB->m_iPosX ? 1 : -1;
+    int m_iTempY1 = -abs(iPointB->m_iPosY - iPointA->m_iPosY);
+    int m_iTempY2 =  iPointA->m_iPosY < iPointB->m_iPosY ? 1 : -1;
+    int m_iERR    =  m_iTempX1 + m_iTempY1;
     int m_iE;
     
-    unsigned char m_bIsRunning = 1;
-    
-    while(m_bIsRunning == 1)
+    while(1)
     {
-        frameBufferProject
-        if(iPointA.m_iPosX == iPointB.m_iPosX && iPointA.m_iPosY == iPointB.m_iPosY)
+        frameBufferProject(&fb, iPointA->m_iPosX, iPointA->m_iPosY, hColorValue);
+        if(iPointA->m_iPosX == iPointB->m_iPosX && iPointA->m_iPosY == iPointB->m_iPosY)
         {
             break;
         }
@@ -43,33 +43,33 @@ void frameBufferDrawLine(frameBuffer_t* fb, Vector2i iPointA, Vector2i iPointB);
         if(m_iE <= m_iTempX1)
         {
             m_iERR += m_iTempX1;
-            iPointA.m_iPosX += m_iTempY2;
+            iPointA->m_iPosX += m_iTempY2;
         }
         if(m_iE >= m_iTempY1)
         {
             m_iERR += m_iTempY1;
-            iPointA.m_iPosY += m_iTempY2;
+            iPointA->m_iPosY += m_iTempY2;
         }
     }
 }
 
 void frameBufferProject(frameBuffer_t* fb, unsigned int iPosX, unsigned int iPosY, unsigned int hColorValue)
 {
-    fb->g_iFrameBufferData[iPosY * fb->g_iFrameBufferWidth + iPosX] = hColorValue;
+    fb->m_hFrameBufferColorData[iPosY * fb->m_iFrameBufferWidth + iPosX] = hColorValue;
 }
 
 void franeBufferResize(frameBuffer_t* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY)
 {
-    fb->g_iFrameBufferWidth  = iFrameBufferTargetX;
-    fb->g_iFrameBufferHeight = iFrameBufferTargetY;
-    fb->g_iFrameBufferData   = (unsigned int*)realloc(fb.iFrameBufferData, iFrameBufferTargetX * iFrameBufferTargetY * sizeof(unsigned int));
+    fb->m_iFrameBufferWidth     = iFrameBufferTargetX;
+    fb->m_iFrameBufferHeight    = iFrameBufferTargetY;
+    fb->m_hFrameBufferColorData = (unsigned int*)realloc(fb->iFrameBufferData, iFrameBufferTargetX * iFrameBufferTargetY * sizeof(unsigned int));
 }
 
 void frameBufferCleanup(frameBuffer_t* fb)
 {
     if(fb != NULL)
     {
-        free(fb->g_iFrameBufferData);
+        free(fb->m_hFrameBufferColorData);
         free(fb);
     }
 }
@@ -77,6 +77,6 @@ void frameBufferCleanup(frameBuffer_t* fb)
 //------------------------------------------------------------------------------------------------//
 // Rylands Demonstration, He Is Upsessed With 720P Resolution Capped At 30 FPS, For Some Reason?  //
 //                                                                                                //
-// frameBuffer* mainDisplayFrameBuffer = frameBufferInit(1280, 720);                              //
+// frameBuffer* mainDisplayFrameBuffer = frameBufferInit("#ScreenSpace_Buffer", 1280, 720, 1);    //
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
