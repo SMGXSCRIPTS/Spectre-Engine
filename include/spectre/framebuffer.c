@@ -14,12 +14,10 @@ frameBuffer_t* frameBufferInit(const char* cFrameBufferType, unsigned int iFrame
 
 void frameBufferClear(frameBuffer_t* fb, unsigned int hColorValue)
 {
-    for(unsigned int m_nCounterX = 0; m_nCounterX < fb->m_iFrameBufferWidth; ++m_nCounterX)
+    unsigned int m_iTotalFrameBufferPixels = (fb->m_iFrameBufferWidth * fb->m_iFrameBufferHeight);
+    for(unsigned int m_nCounter = 0; m_nCounter < m_iTotalFrameBufferPixels; ++m_nCounter)
     {
-        for(unsigned int m_nCounterY = 0; m_nCounterY < fb->m_iFrameBufferHeight; ++m_nCounterY)
-        {
-            fb->m_hFrameBufferColorData[m_nCounterY * fb->m_iFrameBufferWidth + m_nCounterX] = hColorValue;
-        }
+        m_hFrameBufferColorData[m_nCounter] = hColorValue;
     }
 }
 
