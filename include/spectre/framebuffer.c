@@ -21,7 +21,7 @@ void frameBufferClear(frameBuffer_t* fb, unsigned int hColorValue)
     }
 }
 
-void frameBufferDrawLine(frameBuffer_t* fb, Vector2i* iPointA, Vector2i* iPointB, unsigned int hColorValue);
+void frameBufferDrawLine(frameBuffer_t* fb, Vector2i* iPointA, Vector2i* iPointB, unsigned int hColorValue)
 {
     int m_iTempX1 =  abs(iPointB->m_iPosX - iPointA->m_iPosX);
     int m_iTempX2 =  iPointA->m_iPosX < iPointB->m_iPosX ? 1 : -1;
@@ -35,7 +35,7 @@ void frameBufferDrawLine(frameBuffer_t* fb, Vector2i* iPointA, Vector2i* iPointB
         frameBufferProject(&fb, iPointA->m_iPosX, iPointA->m_iPosY, hColorValue);
         if(iPointA->m_iPosX == iPointB->m_iPosX && iPointA->m_iPosY == iPointB->m_iPosY)
         {
-            break;
+            return;
         }
         m_iE = 2 * m_iERR;
         if(m_iE <= m_iTempX1)
