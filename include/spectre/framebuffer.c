@@ -17,7 +17,7 @@ void frameBufferClear(frameBuffer_t* fb, unsigned int hColorValue)
     unsigned int m_iTotalFrameBufferPixels = (fb->m_iFrameBufferWidth * fb->m_iFrameBufferHeight);
     for(unsigned int m_nCounter = 0; m_nCounter < m_iTotalFrameBufferPixels; ++m_nCounter)
     {
-        m_hFrameBufferColorData[m_nCounter] = hColorValue;
+        fb->m_hFrameBufferColorData[m_nCounter] = hColorValue;
     }
 }
 
