@@ -2,7 +2,7 @@
 
 frameBuffer_t* frameBufferInit(const char* cFrameBufferType, unsigned int iFrameBufferSizeX, unsigned int iFrameBufferSizeY, unsigned char bIsGlobal)
 {
-    frameBuffer* fb;
+    frameBuffer_t* fb;
     fb->m_iFrameBufferWidth     = iFrameBufferSizeX;
     fb->m_iFrameBufferHeight    = iFrameBufferSizeY;
     fb->m_hFrameBufferColorData = (unsigned int*)malloc(iFrameBufferWidth * iFrameBufferHeight * sizeof(unsigned int));
