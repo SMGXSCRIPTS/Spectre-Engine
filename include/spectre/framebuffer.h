@@ -12,7 +12,7 @@ typedef struct {
 
 typedef struct {
     const char*   g_cFrameBufferType;
-    unsigned char g_bIsGlobalAccess;
+    unsigned char g_bIsGlobalAccess : 1;
     unsigned int  m_iFrameBufferWidth;
     unsigned int  m_iFrameBufferHeight;
     unsigned int* m_hFrameBufferColorData;
