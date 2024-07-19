@@ -73,8 +73,9 @@ void frameBufferCleanup(frameBuffer_t* fb)
 }
 
 //------------------------------------------------------------------------------------------------//
-// Rylands Demonstration, He Is Upsessed With 720P Resolution Capped At 30 FPS, For Some Reason?  //
+// Basic Visual Demonstration | Here With 720P Resolution Capped At 30FPS                         //
 //                                                                                                //
-// frameBuffer* mainDisplayFrameBuffer = frameBufferInit("#ScreenSpace_Buffer", 1280, 720, 1);    //
+// frameBuffer_t* mainDisplayFrameBuffer = frameBufferInit("#ScreenSpace_Buffer", 1280, 720, 1);  //
+// platformDisplayFrameCap(30, YOUR_EVENT_LOOP_DELTATIME_HERE);                                   //
 //                                                                                                //
 //------------------------------------------------------------------------------------------------//
