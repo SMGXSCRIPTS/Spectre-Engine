@@ -25,13 +25,18 @@ typedef struct {
     float g_fMouseAccelerationX;
     float g_fMouseAccelerationY;
     char* g_cKeyboardBufferInput;
-} inputST;
+} input_t;
 
 typedef struct {
-    unsigned int g_iScreenResolutionX;
-    unsigned int g_iScreenResolutionY;
-    float        g_fScreenRefreshRate;
-} displayST;
+    unsigned int m_iScreenResolutionX;
+    unsigned int m_iScreenResolutionY;
+    float        m_fScreenRefreshRate;
+} display_t;
+
+typedef struct {
+    unsigned int g_iWindowSizeX;
+    unsigned int g_iWindowSizeY;
+} window_t
 
 void platformDisplayInit(char* windowName, unsigned int windowSizeX, unsigned int windowSizeY);
 void platformDisplayRename(char* windowName);
@@ -42,8 +47,9 @@ void platformDisplayClear(void);
 void platformDisplayUpdate(void);
 void platformDisplayCleanup(void);
 
-inputST   platformDisplayKeyInput(void);
-displayST platformDisplayResolution(void);
+input_t   platformDisplayKeyInput(void);
+window_t  platformDisplayWindowRes(void);
+display_t platformDisplayResolution(void);
 
 inline void platformDisplayFrameCap(const float fRefreshRate, const double deltaTime)
 {
