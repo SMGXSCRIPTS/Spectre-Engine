@@ -56,7 +56,7 @@ void frameBufferProject(frameBuffer_t* fb, unsigned int iPosX, unsigned int iPos
     fb->m_hFrameBufferColorData[iPosY * fb->m_iFrameBufferWidth + iPosX] = hColorValue;
 }
 
-void franeBufferResize(frameBuffer_t* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY)
+void frameBufferResize(frameBuffer_t* fb, unsigned int iFrameBufferTargetX, unsigned int iFrameBufferTargetY)
 {
     fb->m_iFrameBufferWidth     = iFrameBufferTargetX;
     fb->m_iFrameBufferHeight    = iFrameBufferTargetY;
